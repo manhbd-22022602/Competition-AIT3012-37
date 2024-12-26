@@ -407,12 +407,7 @@ class BrainAgePredictor:
         """
         try:
             df = pd.read_csv(tsv_file, sep='\t')
-            # return dict(zip(df['participant_id'], df['age']))
-            label = dict(zip(df['participant_id'], df['age']))
-            label_df = pd.DataFrame(list(label.items()), columns=['participant_id', 'age'])
-            filtered_label_df = label_df.groupby('age').apply(lambda x: x.sample(n=min(len(x), 2))).reset_index(drop=True)
-            filtered_label = dict(zip(filtered_label_df['participant_id'], filtered_label_df['age']))
-            return dict(random.sample(filtered_label.items(), min(60, len(filtered_label))))
+            return dict(zip(df['participant_id'], df['age']))
         except Exception as e:
             raise ValueError(f"Error reading age mapping from {tsv_file}: {str(e)}")
 
